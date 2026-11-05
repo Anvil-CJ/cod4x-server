@@ -263,7 +263,7 @@ typedef struct {
 } lerp_missile_t;
 
 typedef struct {
-    int leanf;
+    float leanf; // ANVIL: a float in the engine (src/entity.h), not an int
     int movementDir;
 } lerp_player_t;
 
@@ -544,7 +544,7 @@ typedef struct playerState_s {
     int weaponRestrictKickTime; // 80
     int foliageSoundTime; // 84
     int gravity; // 88
-    int leanf; // 92
+    float leanf; // 92 // ANVIL: a float in the engine (src/player.h), not an int
     int speed; // 96
     vec3_t delta_angles; // 100
 
@@ -617,9 +617,10 @@ typedef struct playerState_s {
     unsigned int weaponold[4];
     unsigned int weaponrechamber[4];
 
-    int proneDirection; // 1420
-    int proneDirectionPitch; // 1424
-    int proneTorsoPitch; // 1428
+    // ANVIL: these three are floats in the engine (src/player.h), not ints.
+    float proneDirection; // 1420
+    float proneDirectionPitch; // 1424
+    float proneTorsoPitch; // 1428
     ViewLockTypes_t viewlocked; // 1432
     int viewlocked_entNum; // 1436
 

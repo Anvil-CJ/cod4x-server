@@ -22,6 +22,7 @@ Follow https://google.github.io/styleguide/cppguide.html. The points below are t
   - class data members: `snake_case_`
   - constants and enumerators: `kPascalCase`
   - macros: `UPPER_CASE`, and avoid macros where possible
+  - names from the game engine keep the engine's spelling (`PMF_FROZEN`, `KEY_MASK_FIRE`), so they can be looked up in its code. Keep them in the repo's one engine header.
 - **Files:** `snake_case` names ending in `.cc` and `.h`, with `#define` header guards in the form `<PROJECT>_<PATH>_<FILE>_H_`.
 - **No exceptions and no RTTI** (`dynamic_cast`, `typeid`). Report errors through return values, usually `std::expected`.
 - **Globals:** objects with static storage duration must be trivially destructible, so no global `std::string` or `std::vector`. Use `constexpr`, or a function-local static. The one exception is the server plugin: its globals may own memory through `std::unique_ptr`, because the engine calls it from one thread and nothing uses it after it unloads.
