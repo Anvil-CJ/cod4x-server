@@ -18,6 +18,7 @@ How we work is in `.claude/rules/engineering.md`, which loads in every session. 
 ## Commands
 
 - Build the server and the plugin, from this folder: `docker build -f plugins/anvil/Dockerfile .`. The local stack in `../anvil/infra/` builds and runs it for you.
+- Unit tests for the plugin: `make -C plugins/anvil test`, which the Docker build runs. They link the plugin's code with a fake engine (`plugins/anvil/tests/fake_engine.h`), under the address and undefined-behavior sanitizers. A new GSC function goes in the list in `tests/refusals_test.cc`.
 - Format the plugin: `make -C plugins/anvil format`, with clang-format 18. The Docker build checks the formatting with that version, and other versions can format differently.
 - Update from upstream: `git fetch upstream`, then `git merge upstream/master`, then build and run the server.
 
