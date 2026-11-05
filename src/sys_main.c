@@ -45,6 +45,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <sys/time.h>
+#include <time.h>
 
 #define MAX_QUED_EVENTS 256
 
@@ -80,11 +81,28 @@ Sys_Milliseconds
 
 unsigned int sys_timeBase;
 
+// ANVIL: the timers below count on the monotonic clock instead of the wall
+// clock (gettimeofday), so sys_timeBase isn't a date any more, and nothing
+// reads it as one. A time sync can step the wall clock either way at any
+// moment. A step back made Com_Frame's frame time wrap around, clamp to 5
+// seconds and run 5 seconds of game time at once ("Hitch warning: 4294966
+// msec frame time"), and a step forward ran a burst of frames too.
+// Sys_MillisecondsRaw (unix/sys_unix.c) stays on the wall clock: it only
+// seeds random numbers and adds up script time that nothing reads.
+static void Sys_MonotonicTime( struct timeval* tp )
+{
+	struct timespec ts;
+
+	clock_gettime( CLOCK_MONOTONIC, &ts );
+	tp->tv_sec = ts.tv_sec;
+	tp->tv_usec = ts.tv_nsec / 1000;
+}
+
 unsigned int Sys_Milliseconds( void )
 {
 	struct timeval tp;
 
-	gettimeofday( &tp, NULL );
+	Sys_MonotonicTime( &tp );
 
 	return ( tp.tv_sec - sys_timeBase ) * 1000 + tp.tv_usec / 1000;
 }
@@ -95,7 +113,7 @@ unsigned long long Sys_MillisecondsLong( void )
 
 	struct timeval tp;
 
-	gettimeofday( &tp, NULL );
+	Sys_MonotonicTime( &tp );
 
 	time = (unsigned long long)tp.tv_sec - (unsigned long long)sys_timeBase;
 	time = time * 1000 + tp.tv_usec / 1000;
@@ -106,7 +124,7 @@ unsigned long long Sys_MillisecondsLong( void )
 void Sys_TimerInit( void ) {
 	struct timeval tp;
 
-	gettimeofday( &tp, NULL );
+	Sys_MonotonicTime( &tp );
 
 	if ( !sys_timeBase )
 	{
@@ -134,7 +152,7 @@ unsigned long long Sys_MicrosecondsLong( void ) {
 	unsigned long long orgtime;
 	unsigned long long time;
 
-	gettimeofday( &tp, NULL );
+	Sys_MonotonicTime( &tp );
 
 	orgtime = tp.tv_sec - sys_timeBase;
 
@@ -154,7 +172,7 @@ unsigned long long Sys_MicrosecondsLong( void ) {
 int Sys_Seconds( void ) {
 	struct timeval tp;
 
-	gettimeofday( &tp, NULL );
+	Sys_MonotonicTime( &tp );
 
 	return tp.tv_sec - sys_timeBase;
 }
