@@ -19,6 +19,7 @@ This file is shared across all four Anvil-CJ repos, and the master copy is in An
    - **Memory and lifetime (C++):** dangling pointers or references, use after free, uninitialized values, integer overflow, signed/unsigned mixups, data races and undefined behavior. Check that struct layouts match the game.
    - **Performance:** work done in hot paths (per frame, per usercmd, per server frame, per request): allocations, copies, O(n²) loops, locks, blocking I/O and logging. Check whether it's slower than before the change.
    - **Security:** untrusted input from game clients, the network or files that reaches logic without validation; injection; secrets in code or logs; trusting what the client says.
+   - **Naming:** names that are vague, misleading or inconsistent with the rest of the code, or that don't match the glossary (`docs/glossary.md` in Anvil-CJ/anvil). The rules are in `.claude/rules/naming.md`.
    - **Rules:** anything that breaks this repo's CLAUDE.md or `.claude/rules/`, including the style guide, the licensing rules and the ban on copied code.
    - **Tests:** do they test the real behavior, including failure cases? Would they catch a regression?
 3. Prove what you can. Run the build and the tests, and write small reproductions in a temporary directory. Never modify the repository's tracked files.

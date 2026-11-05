@@ -25,6 +25,8 @@ How we work is in `.claude/rules/engineering.md`, which loads in every session. 
 | File | When to read it |
 |---|---|
 | `.claude/rules/cpp.md` | Loads automatically: C++ style and performance rules |
+| `.claude/rules/naming.md` | Loads automatically for code files: how to choose names |
+| `../anvil/docs/glossary.md` | The agreed name for every domain concept (it lives in Anvil-CJ/anvil). Check it before naming one |
 | `README.md` | Upstream's build and server setup instructions |
 
 ## Keeping this file small
