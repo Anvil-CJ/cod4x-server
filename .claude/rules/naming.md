@@ -1,11 +1,12 @@
 ---
 paths:
-  - "**/*.{cc,cpp,cxx,h,hpp,hxx,inl,c,gsc,ts,tsx,js,jsx,py,sql,sh,ps1,cs,go,rs}"
+  - "**/*.{cc,cpp,cxx,h,hpp,hxx,inl,c,gsc,ts,tsx,js,jsx,py,sql,sh,ps1,cs,go,rs,yaml,yml,mk,cmake}"
+  - "**/{Dockerfile,makefile,Makefile,CMakeLists.txt}*"
 ---
 
-# Naming, in every language
+# Naming and comments, in every language
 
-This file is shared across all four Anvil-CJ repos, and the master copy is in Anvil-CJ/anvil. Casing rules live in each language's rule file (`cpp.md`, `gsc.md`, `backend-web.md`); this file is about choosing the words. In cod4x-server, upstream code keeps its own names, so never rename upstream symbols.
+This file is shared across all four Anvil-CJ repos, and the master copy is in Anvil-CJ/anvil. Casing rules live in each language's rule file (`cpp.md`, `gsc.md`, `backend-web.md`); this file is about choosing the words, and about when a comment is worth writing. In cod4x-server, upstream code keeps its own names and comments, so never rename upstream symbols or edit its comments.
 
 A reader should know what a type is, or what a function does, from its name alone, without opening it.
 
@@ -46,3 +47,13 @@ The examples use C++ casing.
   - If an existing name is wrong, rename it everywhere instead of adding a second name.
 - **Follow the patterns around you.** If neighboring code uses `Load…` and `Save…`, don't add `Fetch…` or `Persist…`.
 - **Use matching opposites:** start/stop, begin/end, open/close, load/save, enable/disable, add/remove. Don't mix halves of different pairs, like start/end.
+
+## Comments
+
+Code documents itself through its names and structure. A comment has to be worth gold.
+
+- Before you write one, try a better name, a named constant or a smaller function instead.
+- Write one only for what the code can't say: a non-obvious reason, an engine quirk, or a trap for the next person to change it.
+- Keep it to one line if you can.
+- Never restate what the code does, label sections, or tell the history of a change. Git holds the history.
+- The `// ANVIL:` markers on upstream changes in cod4x-server are required, and stay one line.

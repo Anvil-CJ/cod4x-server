@@ -11,7 +11,10 @@ This file is shared across all four Anvil-CJ repos, and the master copy is in An
 
 Follow https://google.github.io/styleguide/cppguide.html. The points below are the ones that matter most; where this list is incomplete, the guide wins.
 
-- **Standard:** C++20, the guide's current target.
+- **Standard:** C++23 in all four repos, one step past the guide's C++20 target.
+  - GCC: version 14 or newer, with `-std=c++23`.
+  - MSVC: C++23 is still a preview switch there (`/std:c++23preview` or `/std:c++latest`). Use the one your Visual Studio offers.
+  - Use the standard library's C++23 features instead of writing your own, such as `std::expected`, `contains` and `std::print`.
 - **Formatting:** run clang-format on every file you change, using the repo's `.clang-format`.
 - **Naming:**
   - types and functions: `PascalCase`
@@ -20,7 +23,7 @@ Follow https://google.github.io/styleguide/cppguide.html. The points below are t
   - constants and enumerators: `kPascalCase`
   - macros: `UPPER_CASE`, and avoid macros where possible
 - **Files:** `snake_case` names ending in `.cc` and `.h`, with `#define` header guards in the form `<PROJECT>_<PATH>_<FILE>_H_`.
-- **No exceptions and no RTTI** (`dynamic_cast`, `typeid`). Report errors through return values (a status or result type).
+- **No exceptions and no RTTI** (`dynamic_cast`, `typeid`). Report errors through return values, usually `std::expected`.
 - **Globals:** objects with static storage duration must be trivially destructible, so no global `std::string` or `std::vector`. Use `constexpr`, or a function-local static.
 - **Constructors:** mark single-argument constructors and conversion operators `explicit`.
 - **Namespaces:** put everything in a namespace, and never write `using namespace`.
