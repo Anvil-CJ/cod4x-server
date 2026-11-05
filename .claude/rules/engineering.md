@@ -15,19 +15,31 @@ This file is shared. Identical copies live in the anvil, client, anticheat and c
 ## Every change
 
 1. **Understand.** Read the code, its callers and the relevant docs. Don't guess.
-2. **Plan** anything bigger than a small fix, and get agreement before writing code.
+2. **Plan** anything bigger than a small fix, and get agreement before writing code. In a batch, agreeing on the batch's list is that agreement.
 3. **Implement** in small steps, following the language rules in `.claude/rules/`.
 4. **Verify.** Build with warnings as errors, run the tests, and run the program. New behavior gets tests, and every bug fix gets a regression test.
-5. **Attack it.** List the ways it could fail (bad input, edge cases, error paths, concurrency, hot-path performance, security) and check each one yourself. This costs little, so do it for every change.
+5. **Attack it.** List the ways it could fail (bad input, edge cases, error paths, concurrency, hot-path performance, security) and check each one yourself.
 6. **Report** in plain language: what changed, how you verified it (the commands and their results), what the attack and any review found, and what risks remain.
 
 Trivial changes, such as a typo or a comment, skip step 2.
 
+**Match the depth of the checks to the risk:**
+- Hot code, the anticheat, and anything a player could abuse get every step in full.
+- Developer tools, scripts and docs get a quick attack: the obvious ways they fail.
+- Breaking a fix on purpose to see its test fail is only worth it where a silent bug would be expensive.
+- Never cut: tests for new behavior, builds without warnings, and in-game checks for what tests can't show.
+
 **Done** means: it builds without warnings, the tests pass, it's formatted, it has gone through step 5 (plus a review where one is required), and the docs are updated. If something couldn't be verified, say exactly what.
 
-## Independent review before a PR
+## Batches
 
-Spawn the `reviewer` subagent once before opening a pull request, but only if the PR touches any of these:
+- **Work in batches of 5 to 10 features.** Agree on the list once, then build it without stopping to ask. Pick sensible defaults, and list them in the report so they're easy to change.
+- **One agent at a time, for now.** Build a batch's features one after another, so nothing is researched or written twice.
+- **The user tests a batch in one game session,** from a checklist of everything the tests can't show.
+
+## Independent review
+
+Spawn the `reviewer` subagent once per batch, or once per change outside a batch, before it's committed or its PR opens. Only do it if the changes touch any of these:
 - hot code (per frame, per usercmd, per server frame)
 - the anticheat
 - network or security boundaries
@@ -38,7 +50,7 @@ How to run it:
 - Give it the goal, the diff and how to build and test. Don't give it your opinion of the code.
 - If the subagent isn't available, give a general-purpose subagent the instructions in `.claude/agents/reviewer.md`.
 - Confirm each finding, fix it, and verify again.
-- Run the reviewer a second time only if it found critical or major problems.
+- If it found critical or major problems, send the fixes back to the same reviewer to check, instead of running a fresh review.
 
 ## Never
 

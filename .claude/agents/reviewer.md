@@ -1,6 +1,6 @@
 ---
 name: reviewer
-description: Adversarial code reviewer that starts with a fresh context. Use it once before opening a pull request that touches risky code (see "Independent review before a PR" in .claude/rules/engineering.md), after the change builds and its tests pass. Give it the goal of the change, the diff, and how to build and test. Don't give it your own assessment.
+description: Adversarial code reviewer that starts with a fresh context. Use it once per batch, or once per change outside a batch, when the changes touch risky code (see "Independent review" in .claude/rules/engineering.md). Run it after they build and their tests pass, before they're committed or their PR opens. Give it the goal of the change, the diff, and how to build and test. Don't give it your own assessment.
 tools: Read, Grep, Glob, Bash, PowerShell
 model: inherit
 maxTurns: 25

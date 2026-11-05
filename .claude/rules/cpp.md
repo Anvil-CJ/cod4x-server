@@ -24,7 +24,7 @@ Follow https://google.github.io/styleguide/cppguide.html. The points below are t
   - macros: `UPPER_CASE`, and avoid macros where possible
 - **Files:** `snake_case` names ending in `.cc` and `.h`, with `#define` header guards in the form `<PROJECT>_<PATH>_<FILE>_H_`.
 - **No exceptions and no RTTI** (`dynamic_cast`, `typeid`). Report errors through return values, usually `std::expected`.
-- **Globals:** objects with static storage duration must be trivially destructible, so no global `std::string` or `std::vector`. Use `constexpr`, or a function-local static.
+- **Globals:** objects with static storage duration must be trivially destructible, so no global `std::string` or `std::vector`. Use `constexpr`, or a function-local static. The one exception is the server plugin: its globals may own memory through `std::unique_ptr`, because the engine calls it from one thread and nothing uses it after it unloads.
 - **Constructors:** mark single-argument constructors and conversion operators `explicit`.
 - **Namespaces:** put everything in a namespace, and never write `using namespace`.
 - **Ownership:** use `std::unique_ptr`. Use `std::shared_ptr` only when ownership is truly shared. No raw `new` or `delete`.
