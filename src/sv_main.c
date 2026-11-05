@@ -4616,6 +4616,11 @@ void SV_GenerateServerId(qboolean longrestart)
     if(longrestart)
     {
         sv.start_frameTime = com_frameTime;
+        // ANVIL: a joining client sends ID 0 and only bits above 255 are compared, so keep them nonzero.
+        if((sv.start_frameTime & 0xffffff00) == 0)
+        {
+            sv.start_frameTime |= 0x100;
+        }
     }
 
     playcount = sv_serverid->integer & 0x000000ff;

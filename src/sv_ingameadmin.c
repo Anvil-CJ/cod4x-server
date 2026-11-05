@@ -128,7 +128,8 @@ qboolean SV_ExecuteRemoteCmd(int clientnum, const char *msg){
 		i++;
 	}
 
-	if(i > 29 || i < 3) return qfalse;
+	// ANVIL: names of 1 or 2 characters too, such as "!s".
+	if(i > 29 || i < 1) return qfalse;
 
 	Q_strncpyz(cmd,msg,i+1);
 
@@ -208,10 +209,8 @@ qboolean SV_ExecuteRemoteCmd(int clientnum, const char *msg){
 
 	Cmd_ExecuteSingleCommand( 0, 0, buffer );
 
-	if(!critcmd)
-	{
-		SV_SendServerCommand(redirectClient, "e \"^5Command^2: %s\"", buffer);
-	}
+	// ANVIL: no "Command: <name>" echo after every chat command.
+	(void)critcmd;
 	Cmd_SetCurrentInvokerInfo(j, -1, oldsteamid, oldname);
 
 	Com_EndRedirect();

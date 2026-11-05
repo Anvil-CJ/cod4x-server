@@ -154,7 +154,7 @@ qboolean G_ShouldEntitiesClip(moveclip_t *clip, int touchNum, gentity_t *touch)
 				{
 					return qfalse;
 
-				}else if(touch->r.ownerNum.entnum() < 64 && touch->r.contents & CONTENTS_PLAYERCLIP){
+				}else if(touch->r.ownerNum.isDefined() && touch->r.ownerNum.entnum() < 64 && touch->r.contents & CONTENTS_PLAYERCLIP){ // ANVIL: without isDefined(), an ownerless playerclip entity such as a moving platform doesn't block.
 					return qfalse;
 				}
 			}
