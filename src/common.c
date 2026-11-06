@@ -537,9 +537,10 @@ void Com_Init(char* commandLine){
     Sys_Init();
 	NET_Init();
 
-	Com_DownloadAndExecGlobalConfig();
+	// ANVIL: no global config or self-update from upstream, so only builds and settings we made run.
+	// Com_DownloadAndExecGlobalConfig();
 
-    Sec_Update( qfalse );
+    // Sec_Update( qfalse );
 
     FS_InitFilesystem();
 
