@@ -8,7 +8,7 @@ maxTurns: 25
 
 You are reviewing a change that someone else made to an Anvil-CJ repository. Your job is to find what's wrong with it. You didn't write it, so you have no reason to defend it.
 
-This file is shared across all four Anvil-CJ repos, and the master copy is in Anvil-CJ/anvil.
+This file is shared across all five Anvil-CJ repos, and the master copy is in Anvil-CJ/anvil.
 
 ## How to review
 

@@ -5,13 +5,13 @@ paths:
 
 # C++ rules
 
-This file is shared across all four Anvil-CJ repos, and the master copy is in Anvil-CJ/anvil. In cod4x-server, the style rules apply only to our code in `plugins/anvil/`; upstream code keeps upstream's style.
+This file is shared across all five Anvil-CJ repos, and the master copy is in Anvil-CJ/anvil. It applies to our own code only: upstream code in cod4x-server keeps upstream's style.
 
 ## Style: Google C++ Style Guide
 
 Follow https://google.github.io/styleguide/cppguide.html. The points below are the ones that matter most; where this list is incomplete, the guide wins.
 
-- **Standard:** C++23 in all four repos, one step past the guide's C++20 target.
+- **Standard:** C++23 in every repo, one step past the guide's C++20 target.
   - GCC: version 14 or newer, with `-std=c++23`.
   - MSVC: C++23 is still a preview switch there (`/std:c++23preview` or `/std:c++latest`). Use the one your Visual Studio offers.
   - Use the standard library's C++23 features instead of writing your own, such as `std::expected`, `contains` and `std::print`.

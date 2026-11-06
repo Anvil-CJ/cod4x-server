@@ -1,6 +1,6 @@
 # How we work (all Anvil-CJ repos)
 
-This file is shared. Identical copies live in the anvil, client, anticheat and cod4x-server repos, and the master copy is in Anvil-CJ/anvil, so change all four together. It loads in every session: keep it to rules that apply to every task.
+This file is shared. Identical copies live in the anvil, anvil-plugin, client, anticheat and cod4x-server repos, and the master copy is in Anvil-CJ/anvil, so change all five together. It loads in every session: keep it to rules that apply to every task.
 
 ## Principles
 

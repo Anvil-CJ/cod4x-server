@@ -2,35 +2,31 @@
 
 This is Anvil's fork of callofduty4x/CoD4x_Server. It's public and licensed AGPL-3.0, and it builds as 32-bit x86 (`-m32`). The build instructions are in `README.md`.
 
-How we work is in `.claude/rules/engineering.md`, which loads in every session. The C++ rules in `.claude/rules/cpp.md` apply to our own code only.
+It holds upstream's code plus the few engine patches our plugin needs. The plugin itself is in the private repo Anvil-CJ/anvil-plugin, which pins this repo as a git submodule and builds both.
+
+How we work is in `.claude/rules/engineering.md`, which loads in every session.
 
 ## Rules for this repo
 
-- **Our code lives in `plugins/anvil/`.**
-  - Change upstream files only when the plugin API can't do the job.
+- **Change upstream files only when the plugin API can't do the job.**
   - Keep those changes minimal, and mark each one with an `// ANVIL:` comment.
-- **Never reformat, rename or tidy up upstream code.** It keeps upstream's style, so merges stay clean.
-  - Google style applies only inside `plugins/anvil/`.
-  - When you create that folder, put a `.clang-format` (`BasedOnStyle: Google`) inside it, never at the repo root.
-- **This repo is public.** No secrets, keys, anticheat logic or private backend details. The plugin stays generic: a connection to the backend, plus engine functions.
-- **Plugin code runs inside the server frame,** so calls to the backend are asynchronous and never block.
+  - An engine patch lands here first. Then anvil-plugin moves its submodule to the new commit, together with the plugin code that uses the patch.
+- **Never reformat, rename or tidy up upstream code.** It keeps upstream's style, so merges stay clean. Our C++ style rules don't apply here.
+- **This repo is public.** No secrets, keys, anticheat logic, plugin code or private backend details.
 
 ## Commands
 
-- Build the server and the plugin, from this folder: `docker build -f plugins/anvil/Dockerfile .`. The local stack in `../anvil/infra/` builds and runs it for you.
-- Unit tests for the plugin: `make -C plugins/anvil test`, which the Docker build runs. They link the plugin's code with a fake engine (`plugins/anvil/tests/fake_engine.h`), under the address and undefined-behavior sanitizers. A new GSC function goes in the list in `tests/refusals_test.cc`.
-- Format the plugin: `make -C plugins/anvil format`, with clang-format 18. The Docker build checks the formatting with that version, and other versions can format differently.
-- Update from upstream: `git fetch upstream`, then `git merge upstream/master`, then build and run the server.
+- Build and test with the plugin: in `../anvil-plugin`, after moving its submodule to your commit. Its `CLAUDE.md` has the commands. The local stack in `../anvil/infra/` builds from there.
+- Update from upstream: `git fetch upstream`, then `git merge upstream/master`, then build and run the server from anvil-plugin.
 
 ## Reference
 
 | File | When to read it |
 |---|---|
-| `.claude/rules/cpp.md` | Loads automatically: C++ style and performance rules |
 | `.claude/rules/naming.md` | Loads automatically for code files: how to choose names, and when a comment is worth writing |
 | `../anvil/docs/glossary.md` | The agreed name for every domain concept (it lives in Anvil-CJ/anvil). Check it before naming one |
 | `README.md` | Upstream's build and server setup instructions |
-| `docs/plugin-api.md` | Before plugin work: what the plugin API can reach, and its traps |
+| `../anvil-plugin/docs/plugin-api.md` | Before an engine patch: what the plugin API can reach, and its traps |
 
 ## Keeping this file small
 

@@ -6,7 +6,7 @@ paths:
 
 # Naming and comments, in every language
 
-This file is shared across all four Anvil-CJ repos, and the master copy is in Anvil-CJ/anvil. Casing rules live in each language's rule file (`cpp.md`, `gsc.md`, `backend-web.md`); this file is about choosing the words, and about when a comment is worth writing. In cod4x-server, upstream code keeps its own names and comments, so never rename upstream symbols or edit its comments.
+This file is shared across all five Anvil-CJ repos, and the master copy is in Anvil-CJ/anvil. Casing rules live in each language's rule file (`cpp.md`, `gsc.md`, `backend-web.md`); this file is about choosing the words, and about when a comment is worth writing. In cod4x-server, upstream code keeps its own names and comments, so never rename upstream symbols or edit its comments.
 
 A reader should know what a type is, or what a function does, from its name alone, without opening it.
 
