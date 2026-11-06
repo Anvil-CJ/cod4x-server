@@ -80,7 +80,8 @@ char PHandler_Events[PLUGINS_ITEMCOUNT][32]={
     "OnScreenshotArrived",
     "OnDemoArrived",
     "OnTerminate",
-    "OnMessageSentTo" // ANVIL: name of PLUGINS_ONMESSAGESENTTO.
+    "OnMessageSentTo", // ANVIL: name of PLUGINS_ONMESSAGESENTTO.
+    "OnPreClientThink" // ANVIL: name of PLUGINS_ONPRECLIENTTHINK.
 };
 
 void PHandler_Init() // Initialize the Plugin Handler's data structures and add commands

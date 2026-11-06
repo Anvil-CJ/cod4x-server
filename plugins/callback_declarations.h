@@ -35,6 +35,8 @@
 	PCL void OnMessageSent(char* message, int slot, qboolean *show, int mode);
 	// ANVIL: before one chat line from slot goes to recipient_slot. Setting show to qfalse keeps it from them.
 	PCL void OnMessageSentTo(int slot, int recipient_slot, qboolean *show);
+	// ANVIL: before the game runs one usercmd of an active client, bots too. The plugin may change it.
+	PCL void OnPreClientThink(client_t* client, usercmd_t* ucmd);
 	PCL void OnPreFastRestart();
 	PCL void OnExitLevel();
 	PCL void OnPostFastRestart();

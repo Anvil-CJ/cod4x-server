@@ -66,6 +66,7 @@ enum PluginEvents{
     PLUGINS_ONDEMOARRIVED,
     PLUGINS_ONTERMINATE,
     PLUGINS_ONMESSAGESENTTO, // ANVIL: fired by G_SayTo, so a plugin can keep chat from one recipient.
+    PLUGINS_ONPRECLIENTTHINK, // ANVIL: fired by SV_ClientThink, so a plugin can change a usercmd before it runs.
     PLUGINS_ITEMCOUNT
 
 };

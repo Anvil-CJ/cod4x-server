@@ -3032,6 +3032,13 @@ void __cdecl SV_FreeClients()
 }
 
 
+// ANVIL: the Anvil plugin reads these through plugins/declarations.h, whose copy of client_t must match (plugins/anvil/src/engine.h).
+_Static_assert(sizeof(client_t) == 0xa53ac, "client_t moved: update plugins/declarations.h and plugins/anvil/src/engine.h");
+_Static_assert(__builtin_offsetof(client_t, reliableSequence) == 0x20b84, "client_t moved: update plugins/declarations.h and plugins/anvil/src/engine.h");
+_Static_assert(__builtin_offsetof(client_t, reliableAcknowledge) == 0x20b88, "client_t moved: update plugins/declarations.h and plugins/anvil/src/engine.h");
+_Static_assert(__builtin_offsetof(client_t, lastUsercmd) == 0x20b9c, "client_t moved: update plugins/declarations.h and plugins/anvil/src/engine.h");
+_Static_assert(__builtin_offsetof(usercmd_t, weapon) == 0x14, "usercmd_t moved: update plugins/declarations.h and plugins/anvil/src/engine.h");
+
 void __cdecl SV_ClientThink(client_t *cl, struct usercmd_s *cmd)
 {
 
@@ -3039,6 +3046,10 @@ void __cdecl SV_ClientThink(client_t *cl, struct usercmd_s *cmd)
 
   if ( cmd->serverTime - svs.time <= 20000 )
   {
+    if ( cl->state == CS_ACTIVE )
+    {
+      PHandler_Event(PLUGINS_ONPRECLIENTTHINK, cl, cmd); // ANVIL: a plugin can change the usercmd first, such as the weapon it asks for.
+    }
     memcpy(&cl->lastUsercmd, cmd, sizeof(cl->lastUsercmd));
     if ( cl->state == CS_ACTIVE )
     {
