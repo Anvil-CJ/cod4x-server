@@ -33,6 +33,8 @@
 	PCL void OnInfoRequest(pluginInfo_t *info);
 	PCL int OnInit();
 	PCL void OnMessageSent(char* message, int slot, qboolean *show, int mode);
+	// ANVIL: before one chat line from slot goes to recipient_slot. Setting show to qfalse keeps it from them.
+	PCL void OnMessageSentTo(int slot, int recipient_slot, qboolean *show);
 	PCL void OnPreFastRestart();
 	PCL void OnExitLevel();
 	PCL void OnPostFastRestart();

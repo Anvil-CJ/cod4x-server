@@ -79,7 +79,8 @@ char PHandler_Events[PLUGINS_ITEMCOUNT][32]={
     "OnScrUsercallMethod",
     "OnScreenshotArrived",
     "OnDemoArrived",
-    "OnTerminate"
+    "OnTerminate",
+    "OnMessageSentTo" // ANVIL
 };
 
 void PHandler_Init() // Initialize the Plugin Handler's data structures and add commands

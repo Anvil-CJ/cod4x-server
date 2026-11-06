@@ -463,6 +463,13 @@ void G_SayTo(gentity_t *ent, gentity_t *other, int mode, int color, const char *
     {
         return;
     }
+    // ANVIL: a plugin can keep one player's chat from one recipient, such as a player who ignores them.
+    qboolean show = qtrue;
+    PHandler_Event(PLUGINS_ONMESSAGESENTTO, ent->s.number, other->s.number, &show);
+    if (!show)
+    {
+        return;
+    }
     if (ent->client->sess.cs.team == TEAM_FREE || ent->client->sess.cs.team == TEAM_SPECTATOR)
     {
         teamcolor = "";
