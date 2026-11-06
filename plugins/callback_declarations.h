@@ -37,6 +37,8 @@
 	PCL void OnMessageSentTo(int slot, int recipient_slot, qboolean *show);
 	// ANVIL: before the game runs one usercmd of an active client, bots too. The plugin may change it.
 	PCL void OnPreClientThink(client_t* client, usercmd_t* ucmd);
+	// ANVIL: as the server copies a client's player state into a snapshot for them. The plugin may change the copy; the game's own is left.
+	PCL void OnSnapshotPlayerState(client_t* client, playerState_t* ps);
 	PCL void OnPreFastRestart();
 	PCL void OnExitLevel();
 	PCL void OnPostFastRestart();

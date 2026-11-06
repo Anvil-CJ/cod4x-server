@@ -32,6 +32,7 @@
 #include "g_sv_shared.h"
 #include "cm_public.h"
 #include "g_shared.h"
+#include "plugin_handler.h" // ANVIL: for PLUGINS_ONSNAPSHOTPLAYERSTATE.
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -939,6 +940,7 @@ static void SV_BuildClientSnapshot( client_t *client ) {
 	ps = SV_GameClientNum( clientNum );
 
 	frame->ps = *ps;
+	PHandler_Event(PLUGINS_ONSNAPSHOTPLAYERSTATE, client, &frame->ps); // ANVIL: a plugin can change what the client is sent, such as which weapons it has.
 
 	//Update client num from other source here
 	clientNum = frame->ps.clientNum;
