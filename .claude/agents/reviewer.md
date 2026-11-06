@@ -1,6 +1,6 @@
 ---
 name: reviewer
-description: Adversarial code reviewer that starts with a fresh context. Use it once per batch, or once per change outside a batch, when the changes touch risky code (see "Independent review" in .claude/rules/engineering.md). Run it after they build and their tests pass, before they're committed or their PR opens. Give it the goal of the change, the diff, and how to build and test. Don't give it your own assessment.
+description: Adversarial code reviewer that starts with a fresh context. Use it once per feature, when its changes touch risky code (see "Independent review" in .claude/rules/engineering.md). Run it only after the user has confirmed in game that the feature works, before its PR merges. Give it the goal of the feature, the diff of all its commits, and how to build and test. Don't give it your own assessment.
 tools: Read, Grep, Glob, Bash, PowerShell
 model: inherit
 maxTurns: 25

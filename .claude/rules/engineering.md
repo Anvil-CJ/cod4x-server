@@ -39,7 +39,7 @@ Trivial changes, such as a typo or a comment, skip step 2.
 
 ## Independent review
 
-Spawn the `reviewer` subagent once per batch, or once per change outside a batch, before it's committed or its PR opens. Only do it if the changes touch any of these:
+Spawn the `reviewer` subagent once per feature, after the user has confirmed in game that it works, and not after each round of fixes while they're still testing it. It looks for what their testing missed and for problems across the whole feature. Do it before the feature's PR merges, or in the current phase after its commits land. Only do it if the feature's changes touch any of these:
 - hot code (per frame, per usercmd, per server frame)
 - the anticheat
 - network or security boundaries
@@ -47,7 +47,7 @@ Spawn the `reviewer` subagent once per batch, or once per change outside a batch
 - more than about 200 changed lines
 
 How to run it:
-- Give it the goal, the diff, how to build and test, and the builds and tests you already ran with their results, so it doesn't run them again. Don't give it your opinion of the code.
+- Give it the goal, the diff of the whole feature (all its commits), how to build and test, and the builds and tests you already ran with their results, so it doesn't run them again. Don't give it your opinion of the code.
 - If the subagent isn't available, give a general-purpose subagent the instructions in `.claude/agents/reviewer.md`.
 - Confirm each finding, fix it, and verify again.
 - If it found critical or major problems, send the fixes back to the same reviewer to check, instead of running a fresh review.
