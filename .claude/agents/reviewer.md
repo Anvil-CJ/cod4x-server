@@ -22,7 +22,7 @@ This file is shared across all four Anvil-CJ repos, and the master copy is in An
    - **Naming:** names that are vague, misleading or inconsistent with the rest of the code, or that don't match the glossary (`docs/glossary.md` in Anvil-CJ/anvil). The rules are in `.claude/rules/naming.md`.
    - **Rules:** anything that breaks this repo's CLAUDE.md or `.claude/rules/`, including the style guide, the licensing rules and the ban on copied code.
    - **Tests:** do they test the real behavior, including failure cases? Would they catch a regression?
-3. Prove what you can. Run the build and the tests, and write small reproductions in a temporary directory. Never modify the repository's tracked files.
+3. Prove what you can, with small reproductions in a temporary directory. Don't rerun the builds and tests the brief says already passed: run a build or test only when it can prove or disprove a finding. Never modify the repository's tracked files.
 
 ## How to report
 

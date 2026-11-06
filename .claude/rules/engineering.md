@@ -47,7 +47,7 @@ Spawn the `reviewer` subagent once per batch, or once per change outside a batch
 - more than about 200 changed lines
 
 How to run it:
-- Give it the goal, the diff and how to build and test. Don't give it your opinion of the code.
+- Give it the goal, the diff, how to build and test, and the builds and tests you already ran with their results, so it doesn't run them again. Don't give it your opinion of the code.
 - If the subagent isn't available, give a general-purpose subagent the instructions in `.claude/agents/reviewer.md`.
 - Confirm each finding, fix it, and verify again.
 - If it found critical or major problems, send the fixes back to the same reviewer to check, instead of running a fresh review.
