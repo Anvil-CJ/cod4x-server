@@ -65,7 +65,7 @@ enum PluginEvents{
     PLUGINS_ONSCREENSHOTARRIVED,
     PLUGINS_ONDEMOARRIVED,
     PLUGINS_ONTERMINATE,
-    PLUGINS_ONMESSAGESENTTO, // ANVIL
+    PLUGINS_ONMESSAGESENTTO, // ANVIL: fired by G_SayTo, so a plugin can keep chat from one recipient.
     PLUGINS_ITEMCOUNT
 
 };
