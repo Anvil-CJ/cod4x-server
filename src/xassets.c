@@ -41,6 +41,10 @@
 #include <stdbool.h>
 #include <ctype.h>
 
+// ANVIL: plugins/anvil/src/engine.h reads these WeaponDef fields.
+_Static_assert(__builtin_offsetof(struct WeaponDef, szInternalName) == 0x0, "WeaponDef moved: update plugins/anvil/src/engine.h");
+_Static_assert(__builtin_offsetof(struct WeaponDef, szXAnims) == 0x50, "WeaponDef moved: update plugins/anvil/src/engine.h");
+
 
 void R_Init(){
 
