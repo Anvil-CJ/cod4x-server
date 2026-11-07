@@ -32,6 +32,7 @@
 #include "g_sv_shared.h"
 #include "cvar.h"
 #include "misc.h"
+#include "bg_public.h" // ANVIL: for BG_BeginLevelBgs.
 #include "sec_crypto.h"
 #include "sv_auth.h"
 #include "cscr_stringlist.h"
@@ -2546,10 +2547,12 @@ void GScr_IsCvarDefined()
 void GScr_ScriptCommandCB()
 {
     char buffer[1024];
+    struct bgs_s *previousBgs; // ANVIL
 
     if (!com_sv_running || !com_sv_running->boolean)
         return;
 
+    previousBgs = BG_BeginLevelBgs(); // ANVIL: a script command typed in the console runs outside a game frame too.
     if (Cmd_Argc() == 1)
     {
         Scr_ScriptCommand(Cmd_GetInvokerClnum(), Cmd_Argv(0), "");
@@ -2561,6 +2564,7 @@ void GScr_ScriptCommandCB()
 
         Scr_ScriptCommand(Cmd_GetInvokerClnum(), Cmd_Argv(0), buffer);
     }
+    BG_EndLevelBgs(previousBgs); // ANVIL
 }
 
 void GScr_AddScriptCommand()

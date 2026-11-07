@@ -42,6 +42,7 @@
 #include "sv_auth.h"
 #include "sec_crypto.h"
 #include "g_public.h"
+#include "bg_public.h" // ANVIL: for BG_BeginLevelBgs.
 
 #include "sapi.h"
 #include "xac_helper.h"
@@ -2595,7 +2596,9 @@ void SV_ExecuteClientCommand( client_t *cl, const char *s, qboolean clientOK, qb
 	if ( clientOK ) {
 		// pass unknown strings to the game
 		if ( !u->name && sv.state == SS_GAME ) {
+			struct bgs_s *previousBgs = BG_BeginLevelBgs(); // ANVIL: chat commands and menu responses run script that can spawn the player.
 			ClientCommand( cl - svs.clients );
+			BG_EndLevelBgs(previousBgs); // ANVIL
 		}
 	}
 

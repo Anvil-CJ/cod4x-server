@@ -139,6 +139,21 @@ struct __align(8) bgs_s
 
 extern struct bgs_s level_bgs;
 extern struct bgs_s *bgs;
+
+// ANVIL: game code that spawns or kills a player needs bgs, which the engine
+// only sets during a game frame and a client's think. Script run from a client
+// command or a console command runs outside both, so set it around those.
+static inline struct bgs_s *BG_BeginLevelBgs(void)
+{
+  struct bgs_s *previous = bgs;
+  bgs = &level_bgs;
+  return previous;
+}
+
+static inline void BG_EndLevelBgs(struct bgs_s *previous)
+{
+  bgs = previous;
+}
 #endif
 
 
