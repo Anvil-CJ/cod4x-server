@@ -1910,7 +1910,7 @@ Cvar_Reset_f
 */
 void Cvar_Reset_f( void ) {
 	if ( Cmd_Argc() != 2 ) {
-		Com_Printf(CON_CHANNEL_DONT_FILTER,"usage: reset <variable>\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"usage: resetcvar <variable>\n"); // ANVIL: was "reset".
 		return;
 	}
 	Cvar_Reset( Cmd_Argv( 1 ) );
@@ -2451,8 +2451,8 @@ void Cvar_Init (void)
 	Cmd_SetCommandCompletionFunc( "setfromcvar", Cvar_CompleteCvarName );
 	Cmd_AddCommand ("setcvartotime", Cvar_SetToTime_f);
 	Cmd_SetCommandCompletionFunc( "setcvartotime", Cvar_CompleteCvarName );
-	Cmd_AddCommand ("reset", Cvar_Reset_f);
-	Cmd_SetCommandCompletionFunc( "reset", Cvar_CompleteCvarName );
+	Cmd_AddCommand ("resetcvar", Cvar_Reset_f); // ANVIL: was "reset", which the mod uses as a chat command (!reset); chat can only reach a free name.
+	Cmd_SetCommandCompletionFunc( "resetcvar", Cvar_CompleteCvarName ); // ANVIL: was "reset".
 	Cmd_AddCommand ("setu", Cvar_SetU_f);
 	Cmd_SetCommandCompletionFunc( "setu", Cvar_CompleteCvarName );
 	Cmd_AddPCommand ("cvarlist", Cvar_List_f, 98);
