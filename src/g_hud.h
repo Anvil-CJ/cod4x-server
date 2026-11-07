@@ -27,7 +27,7 @@
 #include "entity.h"
 
 #define HUDELEM_ADDR 0x8335620
-#define MAX_HUDELEMS 1024
+#define MAX_HUDELEMS 4096 // ANVIL: was 1024, too few for a HUD panel at 64 players. Keep in step with g_hudelems and GScr_NewTeamHudElem in asmsource/_g_hudelem.asm.
 
 typedef enum{
     HUDFONT_DEFAULT,
@@ -77,7 +77,10 @@ typedef struct game_hudelem_s
 }game_hudelem_t;
 
 
-extern struct game_hudelem_s g_hudelems[1024];
+extern struct game_hudelem_s g_hudelems[MAX_HUDELEMS]; // ANVIL: was [1024].
+extern unsigned int g_hudelemsUsedEnd; // ANVIL: one past the highest slot in use, so the scans skip the free slots above it.
+void HudElem_RaiseUsedEnd(game_hudelem_t *hud); // ANVIL: call when a slot comes into use.
+void HudElem_LowerUsedEnd(void); // ANVIL: call after freeing a slot.
 
 game_hudelem_t* G_GetNewHudElem(unsigned int clnum);
 void G_HudSetText(game_hudelem_t*, const char*);

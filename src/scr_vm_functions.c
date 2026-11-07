@@ -2233,7 +2233,7 @@ static qboolean Scr_CanFreeLocalizedConfigString(unsigned int index)
         return qfalse;
 
     /* Check all script hud elements if index in use SLOOOOW :C */
-    while (i < 1024)
+    while (i < (int)g_hudelemsUsedEnd) // ANVIL: was 1024. A slot above it is free, and HudElem_SetDefaults clears its text before reuse.
     {
         game_hudelem_t *elem = &g_hudelems[i];
         if (elem->elem.text &&
@@ -3099,6 +3099,7 @@ void Scr_Destroy_f(scr_entref_t hud_elem_num)
 
     Scr_FreeHudElem(hud_elem);
     hud_elem->elem.type = 0;
+    HudElem_LowerUsedEnd(); // ANVIL: the scans stop at the highest slot in use.
 }
 
 void Scr_IsArray_f()

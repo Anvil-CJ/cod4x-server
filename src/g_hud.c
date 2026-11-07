@@ -85,6 +85,30 @@ void __cdecl HudElem_SetDefaults(game_hudelem_t *hud)
 }
 
 
+unsigned int g_hudelemsUsedEnd; // ANVIL: see g_hud.h.
+
+// ANVIL: added, see g_hud.h.
+void HudElem_RaiseUsedEnd(game_hudelem_t *hud)
+{
+  unsigned int end = hud - g_hudelems + 1;
+
+  assert(end >= 1 && end <= MAX_HUDELEMS);
+  if ( end > g_hudelemsUsedEnd )
+  {
+    g_hudelemsUsedEnd = end;
+  }
+}
+
+// ANVIL: added, see g_hud.h.
+void HudElem_LowerUsedEnd(void)
+{
+  while ( g_hudelemsUsedEnd > 0 && g_hudelems[g_hudelemsUsedEnd - 1].elem.type == HE_TYPE_FREE )
+  {
+    --g_hudelemsUsedEnd;
+  }
+}
+
+
 game_hudelem_t *HudElem_Alloc(int clientNum, int teamNum)
 {
   unsigned int i;
@@ -94,6 +118,7 @@ game_hudelem_t *HudElem_Alloc(int clientNum, int teamNum)
     if ( g_hudelems[i].elem.type == HE_TYPE_FREE )
     {
       HudElem_SetDefaults(&g_hudelems[i]);
+      HudElem_RaiseUsedEnd(&g_hudelems[i]); // ANVIL: the scans stop at the highest slot in use.
       g_hudelems[i].clientNum = clientNum;
       g_hudelems[i].team = teamNum;
       return &g_hudelems[i];
@@ -117,11 +142,12 @@ game_hudelem_t* G_GetNewHudElem(unsigned int clientnum)
 void __cdecl HudElem_Free(struct game_hudelem_s *hud)
 {
   assert(hud != NULL);
-  assert(hud - g_hudelems < 1024);
+  assert(hud - g_hudelems < MAX_HUDELEMS); // ANVIL: was 1024.
   assert(hud->elem.type > HE_TYPE_FREE && hud->elem.type < HE_TYPE_COUNT);
 
   Scr_FreeHudElem(hud);
   hud->elem.type = 0;
+  HudElem_LowerUsedEnd(); // ANVIL: the scans stop at the highest slot in use.
 }
 
 
@@ -214,6 +240,7 @@ void G_HudDestroy(game_hudelem_t* element){
 
     Scr_FreeHudElem(element);
     element->elem.type = 0;
+    HudElem_LowerUsedEnd(); // ANVIL: the scans stop at the highest slot in use.
 
 }
 
@@ -221,7 +248,7 @@ void __cdecl HudElem_ClientDisconnect(struct gentity_s *ent)
 {
   unsigned int i;
 
-  for ( i = 0; i < 1024; ++i )
+  for ( i = 0; i < g_hudelemsUsedEnd; ++i ) // ANVIL: was 1024.
   {
     if ( g_hudelems[i].elem.type )
     {
@@ -237,14 +264,15 @@ void __cdecl HudElem_DestroyAll()
 {
   unsigned int i;
 
-  for ( i = 0; i < 1024; ++i )
+  for ( i = 0; i < MAX_HUDELEMS; ++i ) // ANVIL: was 1024.
   {
     if ( g_hudelems[i].elem.type )
     {
       HudElem_Free(&g_hudelems[i]);
     }
   }
-  memset(g_hudelems, 0, 1024*sizeof(struct hudelem_s));
+  memset(g_hudelems, 0, sizeof(g_hudelems)); // ANVIL: was 1024*sizeof(struct hudelem_s), which missed the tail of the array.
+  g_hudelemsUsedEnd = 0; // ANVIL: every slot is free.
 }
 
 
@@ -267,7 +295,9 @@ void __cdecl HudElem_UpdateClient(struct gclient_s *client, int clientNum, enum 
 
   assert(client != NULL);
 
-  for(i = 0, hud = g_hudelems, archivalCount = 0, currentCount = 0;i < 1024; ++i, ++hud)
+  unsigned int usedEnd = g_hudelemsUsedEnd; // ANVIL: read once, as the memcpy below could alias it.
+
+  for(i = 0, hud = g_hudelems, archivalCount = 0, currentCount = 0;i < usedEnd; ++i, ++hud) // ANVIL: was 1024.
   {
     if ( hud->elem.type && !(hud->elem.flags & 0x2000) && (!hud->team || hud->team == client->sess.cs.team) && (hud->clientNum == 1023 || hud->clientNum == clientNum) )
     {

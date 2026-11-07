@@ -31,6 +31,7 @@
 	extern strncat
 	extern ceilf
 	extern Scr_AddHudElem
+	extern HudElem_RaiseUsedEnd ; ANVIL: GScr_NewTeamHudElem raises it.
 	extern strcmp
 	extern itemRegistered
 	extern memset
@@ -2274,7 +2275,7 @@ GScr_NewTeamHudElem_70:
 GScr_NewTeamHudElem_60:
 	add eax, 0x1
 	add edx, 0xac
-	cmp eax, 0x400
+	cmp eax, 0x1000 ; ANVIL: MAX_HUDELEMS, was 0x400.
 	jz GScr_NewTeamHudElem_50
 GScr_NewTeamHudElem_40:
 	mov ecx, [edx]
@@ -2328,6 +2329,10 @@ GScr_NewTeamHudElem_40:
 	mov dword [ecx+0x7c], 0x0
 	mov dword [edx+g_hudelems+0xa0], 0x3ff
 	mov [edx+g_hudelems+0xa4], ebx
+	mov ebx, ecx ; ANVIL: the scans stop at the highest slot in use. ebx survives the call, and its team is stored.
+	mov [esp], ebx ; ANVIL
+	call HudElem_RaiseUsedEnd ; ANVIL
+	mov ecx, ebx ; ANVIL
 GScr_NewTeamHudElem_80:
 	mov [esp], ecx
 	call Scr_AddHudElem
@@ -2538,7 +2543,7 @@ fields: dd _cstring_x, 0x4, 0x1, 0x0, 0x0, 0x0, 0x0, _cstring_y, 0x8, 0x1, 0x0, 
 
 ;Zero initialized global or static variables of g_hudelem:
 SECTION .bss
-g_hudelems: resb 0x2b000
+g_hudelems: resb 0xac000 ; ANVIL: MAX_HUDELEMS * 0xac, was 1024 * 0xac.
 
 
 ;All cstrings:
