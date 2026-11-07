@@ -158,6 +158,7 @@ Sys_SigHandler
 */
 void Sys_SigHandler( int signal, struct sigcontext ctx )
 {
+	Com_StopRedirect(); // ANVIL: a crash in a chat command would send its report to the player instead of the log.
 	if( signal == SIGSEGV || signal == SIGTRAP || signal == SIGBUS || signal == SIGIOT || signal == SIGILL || signal == SIGFPE )
 	{
 		Sys_DumpCrash( signal, &ctx );
