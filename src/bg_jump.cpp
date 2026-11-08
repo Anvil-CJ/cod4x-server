@@ -357,7 +357,7 @@ void __cdecl Jump_RegisterDvars()
 {
   jump_height = Cvar_RegisterFloat("jump_height", 39.0, 0.0, 1000.0, 0x180u, "The maximum height of a player's jump");
   jump_stepSize = Cvar_RegisterFloat("jump_stepSize", 18.0, 0.0, 64.0, 0x180u, "The maximum step up to the top of a jump arc");
-  jump_slowdownEnable = Cvar_RegisterBool("jump_slowdownEnable", qtrue, 0x180u, "Slow player movement after jumping");
+  jump_slowdownEnable = Cvar_RegisterBool("jump_slowdownEnable", qfalse, 0x180u | CVAR_ROM, "Slow player movement after jumping"); // ANVIL: was on and settable; every Anvil server plays without it.
   jump_ladderPushVel = Cvar_RegisterFloat("jump_ladderPushVel", 128.0, 0.0, 1024.0, 0x180u, "The velocity of a jump off of a ladder");
   jump_spreadAdd = Cvar_RegisterFloat("jump_spreadAdd", 64.0, 0.0, 512.0, 0x180u, "The amount of spread scale to add as a side effect of jumping");
 }
