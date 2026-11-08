@@ -176,7 +176,7 @@ typedef struct{
     int hasControl;
 }pluginWrapper_t;
 
-#define MAX_SCRIPTFUNCTIONS 64
+#define MAX_SCRIPTFUNCTIONS 256 // ANVIL: was 64; the Anvil plugin has more GSC functions.
 
 typedef union
 {
