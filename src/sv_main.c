@@ -4077,9 +4077,9 @@ void SV_BotUserMove(client_t *client)
 
     client->deltaMessage = client->netchan.outgoingSequence - 1;
     SV_ClientThink(client, &ucmd);
-    // ANVIL: a bot's usercmd reaches the plugin like a player's (SV_UserMove),
-    // so bots play runs too.
-    PHandler_Event(PLUGINS_ONCLIENTMOVECOMMAND, client, &ucmd);
+    // ANVIL: an active bot's usercmd reaches the plugin, as players' do in SV_UserMove.
+    if (client->state == CS_ACTIVE)
+        PHandler_Event(PLUGINS_ONCLIENTMOVECOMMAND, client, &ucmd);
 }
 
 
