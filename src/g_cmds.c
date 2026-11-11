@@ -33,6 +33,7 @@ If you have questions concerning this license or the applicable additional terms
 #include "g_sv_shared.h"
 #include "scr_vm.h"
 #include "sv_snapshot.h"
+#include "plugin_handler.h" // ANVIL: for PLUGINS_ONMENURESPONSE.
 
 /*
 ==================
@@ -699,6 +700,13 @@ void __cdecl Cmd_MenuResponse_f(gentity_t *pEnt)
   {
     szMenuName[0] = 0;
     strcpy(szResponse, "bad");
+  }
+  // ANVIL: a waiting script sees only the first notify of a server frame, so a plugin can take a response and notify it in a later frame.
+  qboolean isTaken = qfalse;
+  PHandler_Event(PLUGINS_ONMENURESPONSE, pEnt->s.number, szMenuName, szResponse, &isTaken);
+  if ( isTaken )
+  {
+    return;
   }
   Scr_AddString(szResponse);
   Scr_AddString(szMenuName);

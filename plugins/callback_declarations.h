@@ -39,6 +39,8 @@
 	PCL void OnPreClientThink(client_t* client, usercmd_t* ucmd);
 	// ANVIL: as the server copies a client's player state into a snapshot for them. The plugin may change the copy; the game's own is left.
 	PCL void OnSnapshotPlayerState(client_t* client, playerState_t* ps);
+	// ANVIL: before the menu response the client in slot sent is notified to scripts. Setting isTaken to qtrue keeps the engine from notifying it.
+	PCL void OnMenuResponse(int slot, const char* menu, const char* response, qboolean *isTaken);
 	PCL void OnPreFastRestart();
 	PCL void OnExitLevel();
 	PCL void OnPostFastRestart();
