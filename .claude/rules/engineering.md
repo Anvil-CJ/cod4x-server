@@ -45,7 +45,7 @@ Once per feature, after the user has confirmed in game that it works (not after 
 
 ## Git
 
-**Current phase: only veteri works in these repos, so every change goes straight to the default branch. When a second person starts, delete this line.**
+**Current phase: veteri and calzum push every change straight to the default branch. Rebase onto the latest default branch before you push, and never force-push it.**
 
 Commit messages: an imperative summary line under 72 characters, then a body that explains why. What counts as a small change, PR branches, and review and merge are in `docs/git.md` in the anvil repo: read it before opening a PR.
 
