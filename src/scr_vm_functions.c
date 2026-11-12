@@ -1437,7 +1437,8 @@ void GScr_StrColorStrip()
 
     int i, j;
 
-    for (i = 0, j = 0; string[i]; ++i)
+    // ANVIL: stop at the buffer's end and end the string, as StrRepl does.
+    for (i = 0, j = 0; string[i] && j < (int)sizeof(buffer) - 1; ++i)
     {
         if (string[i] == '^' && string[i + 1] >= '0' && string[i + 1] <= '9')
         {
@@ -1447,6 +1448,7 @@ void GScr_StrColorStrip()
             ++j;
         }
     }
+    buffer[j] = 0; // ANVIL: the string's end.
     Scr_AddString(buffer);
 }
 
