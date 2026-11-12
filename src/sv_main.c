@@ -4025,9 +4025,12 @@ void SV_BotUserMove(client_t *client)
             /* Rotate vector according to current client pitch angle. */
             vec2_rotate(move_pos, -ent->r.currentAngles[1]);
             /* Limit vector components to 127. */
-            vec2_multiply(move_pos, 127 / vec2_maxabs(move_pos));
+            // ANVIL: one scale for both axes (the macro evaluated it twice), rounded toward zero so no axis wraps past 127.
+            float move_scale = 127 / vec2_maxabs(move_pos);
+            vec2_multiply(move_pos, move_scale);
             /* Round components to integer values. */
-            vec2_floor(move_pos);
+            move_pos[0] = truncf(move_pos[0]);
+            move_pos[1] = truncf(move_pos[1]);
             /* Invert second component to fit movement requirements. */
             move_pos[1] = -move_pos[1];
             /* Copy result to actual move command. */
