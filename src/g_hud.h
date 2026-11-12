@@ -81,6 +81,7 @@ extern struct game_hudelem_s g_hudelems[MAX_HUDELEMS]; // ANVIL: was [1024].
 extern unsigned int g_hudelemsUsedEnd; // ANVIL: one past the highest slot in use, so the scans skip the free slots above it.
 void HudElem_RaiseUsedEnd(game_hudelem_t *hud); // ANVIL: call when a slot comes into use.
 void HudElem_LowerUsedEnd(void); // ANVIL: call after freeing a slot.
+void __cdecl HudElem_UpdateSpectator(struct gclient_s *client, int clientNum); // ANVIL: the followed player's archived hudelems, or the spectator's own if a plugin says so.
 
 game_hudelem_t* G_GetNewHudElem(unsigned int clnum);
 void G_HudSetText(game_hudelem_t*, const char*);

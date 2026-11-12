@@ -43,6 +43,8 @@
 	PCL void OnMenuResponse(int slot, const char* menu, const char* response, qboolean *isTaken);
 	// ANVIL: as ClientThink_real sets the move speed of the client in slot from g_speed, just before its Pmove, bots too. The plugin may change speed.
 	PCL void OnClientMoveSpeed(int slot, int *speed);
+	// ANVIL: once a server frame for each spectator in slot who follows a player, after their state became a copy of that player's. Setting hasOwnHud to qtrue sends them their own archived hudelems in place of that player's.
+	PCL void OnSpectatorHud(int slot, qboolean *hasOwnHud);
 	PCL void OnPreFastRestart();
 	PCL void OnExitLevel();
 	PCL void OnPostFastRestart();

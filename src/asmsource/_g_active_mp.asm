@@ -88,7 +88,7 @@
 	extern SV_GameSendServerCommand
 	extern SV_GameDropClient
 	extern SV_GetArchivedClientInfo
-	extern HudElem_UpdateClient
+	extern HudElem_UpdateSpectator ; ANVIL: in place of HudElem_UpdateClient.
 	extern StuckInClient
 	extern G_UpdateEntityStateFromPlayerState
 
@@ -2654,12 +2654,11 @@ SpectatorClientEndFrame_40:
 	mov [esp+0x4], edx
 	mov [esp], esi
 	call memcpy
-	mov dword [esp+0x8], 0x2
-	mov edx, [ebp+0x8]
+	mov edx, [ebp+0x8] ; ANVIL: HudElem_UpdateSpectator(client, ent->s.number) in place of HudElem_UpdateClient(client, ent->s.number, HUDELEM_UPDATE_CURRENT).
 	mov eax, [edx]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call HudElem_UpdateClient
+	call HudElem_UpdateSpectator ; ANVIL
 	mov [esi+0xb0], ebx
 	mov edx, [esi+0x14]
 	and edx, 0xfffffffb

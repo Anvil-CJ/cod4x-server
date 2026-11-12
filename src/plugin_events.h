@@ -70,6 +70,7 @@ enum PluginEvents{
     PLUGINS_ONSNAPSHOTPLAYERSTATE, // ANVIL: fired by SV_BuildClientSnapshot, so a plugin can change the player state a client is sent.
     PLUGINS_ONMENURESPONSE, // ANVIL: fired by Cmd_MenuResponse_f, so a plugin can take a menu response and notify it later.
     PLUGINS_ONCLIENTMOVESPEED, // ANVIL: fired by ClientThink_real, so a plugin can set one client's move speed.
+    PLUGINS_ONSPECTATORHUD, // ANVIL: fired by HudElem_UpdateSpectator, so a plugin can give a following spectator their own archived hudelems.
     PLUGINS_ITEMCOUNT
 
 };

@@ -25,6 +25,7 @@
 #include "g_shared.h"
 #include "g_sv_shared.h"
 #include "scr_vm.h"
+#include "plugin_handler.h" // ANVIL: for HudElem_UpdateSpectator's event.
 
 
 #ifndef NDEBUG
@@ -352,6 +353,14 @@ void __cdecl HudElem_UpdateClient(struct gclient_s *client, int clientNum, enum 
       ++currentCount;
     }
   }
+}
+
+// ANVIL: SpectatorClientEndFrame calls it after copying in the followed player's state, so a plugin can give the spectator their own archived hudelems in place of that player's.
+void __cdecl HudElem_UpdateSpectator(struct gclient_s *client, int clientNum)
+{
+  qboolean hasOwnHud = qfalse;
+  PHandler_Event(PLUGINS_ONSPECTATORHUD, clientNum, &hasOwnHud);
+  HudElem_UpdateClient(client, clientNum, hasOwnHud ? HUDELEM_UPDATE_ARCHIVAL_AND_CURRENT : HUDELEM_UPDATE_CURRENT);
 }
 
 

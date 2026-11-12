@@ -84,7 +84,8 @@ char PHandler_Events[PLUGINS_ITEMCOUNT][32]={
     "OnPreClientThink", // ANVIL: name of PLUGINS_ONPRECLIENTTHINK.
     "OnSnapshotPlayerState", // ANVIL: name of PLUGINS_ONSNAPSHOTPLAYERSTATE.
     "OnMenuResponse", // ANVIL: name of PLUGINS_ONMENURESPONSE.
-    "OnClientMoveSpeed" // ANVIL: name of PLUGINS_ONCLIENTMOVESPEED.
+    "OnClientMoveSpeed", // ANVIL: name of PLUGINS_ONCLIENTMOVESPEED.
+    "OnSpectatorHud" // ANVIL: name of PLUGINS_ONSPECTATORHUD.
 };
 
 void PHandler_Init() // Initialize the Plugin Handler's data structures and add commands
