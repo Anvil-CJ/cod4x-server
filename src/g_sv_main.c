@@ -802,3 +802,11 @@ void __cdecl G_SafeServerDObjFree(int handle)
   Com_SafeServerDObjFree(handle);
 }
 
+// ANVIL: ClientThink_real calls it in place of reading g_speed, so a plugin can give one client its own move speed.
+int __cdecl G_ClientMoveSpeed(gclient_t *client)
+{
+  int speed = g_speed->integer;
+  PHandler_Event(PLUGINS_ONCLIENTMOVESPEED, client->ps.clientNum, &speed);
+  return speed;
+}
+

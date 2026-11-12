@@ -69,6 +69,7 @@ enum PluginEvents{
     PLUGINS_ONPRECLIENTTHINK, // ANVIL: fired by SV_ClientThink, so a plugin can change a usercmd before it runs.
     PLUGINS_ONSNAPSHOTPLAYERSTATE, // ANVIL: fired by SV_BuildClientSnapshot, so a plugin can change the player state a client is sent.
     PLUGINS_ONMENURESPONSE, // ANVIL: fired by Cmd_MenuResponse_f, so a plugin can take a menu response and notify it later.
+    PLUGINS_ONCLIENTMOVESPEED, // ANVIL: fired by ClientThink_real, so a plugin can set one client's move speed.
     PLUGINS_ITEMCOUNT
 
 };

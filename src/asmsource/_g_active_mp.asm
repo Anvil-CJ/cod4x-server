@@ -54,7 +54,7 @@
 	extern SV_EntityContact
 	extern BG_PlayerTouchesItem
 	extern BG_GetSpeed
-	extern g_speed
+	extern G_ClientMoveSpeed ; ANVIL: in place of g_speed.
 	extern BG_CalculateViewAngles
 	extern BG_GetWeaponDef
 	extern BG_CalculateWeaponPosition_Sway
@@ -1407,9 +1407,8 @@ ClientThink_real_100:
 	lea eax, [edi+0x3164]
 	mov [ebp-0x268], eax
 	mov [ebp-0xac], eax
-	mov eax, g_speed
-	mov eax, [eax]
-	mov eax, [eax+0xc]
+	mov [esp], edi ; ANVIL: G_ClientMoveSpeed(client) in place of g_speed->integer. edi is the client, and the registers it clobbers are set again below.
+	call G_ClientMoveSpeed ; ANVIL
 	mov [edi+0x60], eax
 	lea edx, [ebp-0x3c]
 	mov [esp+0x4], edx
