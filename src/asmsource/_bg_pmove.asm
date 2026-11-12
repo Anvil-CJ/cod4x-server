@@ -86,6 +86,7 @@
 	extern CG_TraceCapsule
 	extern G_TraceCapsule
 	extern G_PlayerEvent
+	extern PM_OnPushedOutOfSolid ; ANVIL: called after PM_GroundTrace pushes a player out of solid.
 
 ;Exports of bg_pmove:
 	global viewLerp_CrouchStand
@@ -528,6 +529,8 @@ PM_GroundTrace_30:
 	call PM_playerTrace
 	cmp byte [ebp-0x3f], 0x0
 	jnz PM_GroundTrace_50
+	mov eax, [ebx+0x24] ; ANVIL: keeps origin[2] before the push-out in [ebp-0xb4], a slot the function never uses.
+	mov [ebp-0xb4], eax ; ANVIL
 	mov eax, [ebp-0x3c]
 	mov [ebx+0x1c], eax
 	mov eax, [ebp-0x38]
@@ -596,6 +599,10 @@ PM_GroundTrace_30:
 	mulss xmm2, xmm0
 	addss xmm1, xmm2
 	movss [ebx+0x24], xmm1
+	mov eax, [ebp-0xb4] ; ANVIL: PM_OnPushedOutOfSolid(ps, origin[2] before). ebx is ps, and the code after reloads every register it clobbers.
+	mov [esp+0x4], eax ; ANVIL
+	mov [esp], ebx ; ANVIL
+	call PM_OnPushedOutOfSolid ; ANVIL
 PM_GroundTrace_20:
 	cmp byte [ebp-0x3f], 0x0
 	jnz PM_GroundTrace_60

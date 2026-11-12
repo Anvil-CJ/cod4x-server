@@ -810,3 +810,10 @@ int __cdecl G_ClientMoveSpeed(gclient_t *client)
   return speed;
 }
 
+// ANVIL: PM_GroundTrace calls it after it pushes a player out of solid, as elevators do, so a plugin can tell them.
+void __cdecl PM_OnPushedOutOfSolid(playerState_t *ps, float originZBefore)
+{
+  float liftUnits = ps->origin[2] - originZBefore;
+  PHandler_Event(PLUGINS_ONPUSHEDOUTOFSOLID, ps->clientNum, &liftUnits);
+}
+

@@ -71,6 +71,7 @@ enum PluginEvents{
     PLUGINS_ONMENURESPONSE, // ANVIL: fired by Cmd_MenuResponse_f, so a plugin can take a menu response and notify it later.
     PLUGINS_ONCLIENTMOVESPEED, // ANVIL: fired by ClientThink_real, so a plugin can set one client's move speed.
     PLUGINS_ONSPECTATORHUD, // ANVIL: fired by HudElem_UpdateSpectator, so a plugin can give a following spectator their own archived hudelems.
+    PLUGINS_ONPUSHEDOUTOFSOLID, // ANVIL: fired by PM_GroundTrace, so a plugin can tell elevators.
     PLUGINS_ITEMCOUNT
 
 };

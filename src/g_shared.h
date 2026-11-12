@@ -623,6 +623,7 @@ void __cdecl G_SetClientContents(struct gentity_s *pEnt);
 void __cdecl ClientEndFrame(struct gentity_s *ent);
 void __cdecl ClientThink_real(struct gentity_s *ent, struct usercmd_s *ucmd);
 int __cdecl G_ClientMoveSpeed(struct gclient_s *client); // ANVIL: g_speed, or what a plugin sets for the client.
+void __cdecl PM_OnPushedOutOfSolid(struct playerState_s *ps, float originZBefore); // ANVIL: fires OnPushedOutOfSolid.
 void __cdecl BG_PlayerStateToEntityState(struct playerState_s *ps, struct entityState_s *s, int snap, char handler);
 int G_GetClientArchiveTime(int clientindex);
 void G_SetClientArchiveTime(int clindex, int time);

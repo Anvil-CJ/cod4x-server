@@ -45,6 +45,8 @@
 	PCL void OnClientMoveSpeed(int slot, int *speed);
 	// ANVIL: once a server frame for each spectator in slot who follows a player, after their state became a copy of that player's. Setting hasOwnHud to qtrue sends them their own archived hudelems in place of that player's.
 	PCL void OnSpectatorHud(int slot, qboolean *hasOwnHud);
+	// ANVIL: during the Pmove of the player in slot, bots too, after its ground trace started all in solid and pushed them out to a free spot. liftUnits is how far up it moved them in all, negative for down.
+	PCL void OnPushedOutOfSolid(int slot, const float *liftUnits);
 	PCL void OnPreFastRestart();
 	PCL void OnExitLevel();
 	PCL void OnPostFastRestart();
