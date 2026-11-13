@@ -29,8 +29,9 @@ Work in batches of 5 to 10 features. Agree on the list once, then build it witho
 ## Independent review
 
 Once per feature, after the user has confirmed in game that it works (not after each round of fixes), spawn the `reviewer` subagent if the feature touches hot code (per frame, usercmd or server frame), the anticheat, network or security boundaries, database migrations, or more than about 200 lines. Do it before the feature's PR merges, or in the current phase after its commits land.
-- Give it the goal, the diff of all the feature's commits, how to build and test, and the builds and tests already run with their results. Not your opinion of the code.
-- Without the subagent, give a general-purpose subagent `.claude/agents/reviewer.md`.
+- Give it the goal, the path of a file holding the diff of all the feature's commits, how to build and test, and the builds and tests already run with their results, so it doesn't rerun them. Not your opinion of the code.
+- It runs on Sonnet with at most 20 turns, to keep usage low. Run one at a time.
+- Without the subagent, give a general-purpose subagent on Sonnet `.claude/agents/reviewer.md`.
 - Confirm each finding, fix it and verify again. After critical or major findings, send the fixes back to the same reviewer.
 
 ## Never
