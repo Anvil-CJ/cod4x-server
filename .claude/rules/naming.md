@@ -1,6 +1,6 @@
 ---
 paths:
-  - "**/*.{cc,cpp,cxx,h,hpp,hxx,inl,c,gsc,ts,tsx,js,jsx,py,sql,sh,ps1,cs,go,rs,yaml,yml,mk,cmake}"
+  - "**/*.{cc,cpp,cxx,h,hpp,hxx,inl,c,gsc,ts,tsx,js,jsx,mjs,vue,css,glsl,wgsl,py,sql,sh,ps1,cs,go,rs,yaml,yml,mk,cmake}"
   - "**/{Dockerfile,makefile,Makefile,CMakeLists.txt}*"
 ---
 
