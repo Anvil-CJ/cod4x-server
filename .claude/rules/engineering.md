@@ -22,6 +22,8 @@ Shared: identical copies live in anvil, anvil-plugin, client, anticheat and cod4
 
 **Done** means: it builds without warnings, the tests pass, it's formatted, it went through step 5 (and a review where one is required), and the docs are updated. Say exactly what couldn't be verified.
 
+A build, test or tool change is done only when its full test passes from a plain shell. A tool may read only stock files and the paths in `infra/.env`, never anything set up by hand on one PC.
+
 ## Batches
 
 Work in batches of 5 to 10 features. Agree on the list once, then build it without stopping to ask; pick sensible defaults and list them in the report. One agent at a time, one feature after another, so nothing is researched or written twice. The user tests a batch in one game session, from a checklist of what the tests can't show.
