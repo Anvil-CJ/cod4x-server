@@ -42,6 +42,7 @@ Once per feature, after the user has confirmed in game that it works (not after 
 - Push more than a small change straight to the default branch, or force-push it.
 - Add a dependency without asking first: say its license, cost and whether it's maintained. MIT and closed-source repos take permissive licenses only.
 - Copy code from other projects (OpenCJ, other mods, forums). Read them for ideas and write our own.
+  - Exception: shader code (HLSL, GLSL) may be used if its license is permissive (MIT, BSD, Apache, CC0, public domain) or its author gave written permission. Credit the author, link the source and name the license in the file's first comment. Shadertoy's default, CC BY-NC-SA, isn't permissive: ask the author.
 - Commit or print secrets.
 - Leave behind what you made for a check: run containers with `docker run --rm`, `docker rmi` every image you tagged, and delete large scratchpad files before you report. A build stage tagged for one check costs 1 to 2 GB until someone removes it.
 
