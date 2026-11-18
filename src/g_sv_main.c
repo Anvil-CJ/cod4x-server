@@ -578,8 +578,8 @@ void BG_RegisterCvars()
 	 bg_foliagesnd_slowinterval = Cvar_RegisterInt( "bg_foliagesnd_slowinterval", 1500, 0, 2147483647, 0x180u, "The time between each foliage sound when moving slowly");
 	 bg_foliagesnd_fastinterval = Cvar_RegisterInt( "bg_foliagesnd_fastinterval", 500, 0, 2147483647, 0x180u, "The time between each foliage sound when moving quickly");
 	 bg_foliagesnd_resetinterval = Cvar_RegisterInt( "bg_foliagesnd_resetinterval", 500, 0, 2147483647, 0x180u, "The time interval before foliage sounds are reset after the player has stopped moving");
-	 bg_fallDamageMinHeight = Cvar_RegisterFloat( "bg_fallDamageMinHeight", 128.0, 1.0, 3.4028235e38, 0x188u, "The height that a player will start to take minimum damage if they fall");
-	 bg_fallDamageMaxHeight = Cvar_RegisterFloat( "bg_fallDamageMaxHeight", 300.0, 1.0, 3.4028235e38, 0x188u, "The height that a player will take maximum damage when falling");
+	 bg_fallDamageMinHeight = Cvar_RegisterFloat( "bg_fallDamageMinHeight", 128.0, 1.0, 3.4028235e38, 0x188u | CVAR_ROM, "The height that a player will start to take minimum damage if they fall"); // ANVIL: read-only, so a map script can't change how falls land.
+	 bg_fallDamageMaxHeight = Cvar_RegisterFloat( "bg_fallDamageMaxHeight", 300.0, 1.0, 3.4028235e38, 0x188u | CVAR_ROM, "The height that a player will take maximum damage when falling"); // ANVIL: as bg_fallDamageMinHeight.
 	 inertiaMax = Cvar_RegisterFloat("inertiaMax", 50.0, 0.0, 1000.0, 0x180u, "Maximum player inertia");
 	 inertiaDebug = Cvar_RegisterBool("inertiaDebug", 0, 0x180u, "Show inertia debug information");
 	 inertiaAngle = Cvar_RegisterFloat( "inertiaAngle", 0.0, -1.0, 1.0, 0x180u, "The cosine of the angle at which inertia occurs");
