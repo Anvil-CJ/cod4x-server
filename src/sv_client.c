@@ -46,6 +46,7 @@
 
 #include "sapi.h"
 #include "xac_helper.h"
+#include "usercmd_base.h" // ANVIL: for SV_UserMove.
 
 #include <stdint.h>
 #include <stdarg.h>
@@ -1056,7 +1057,11 @@ __optimize3 __regparm3 void SV_UserMove( client_t *cl, msg_t *msg, qboolean delt
 
 	oldcmd = &nullcmd;
 
-	MSG_SetDefaultUserCmd(ps, oldcmd);
+	// ANVIL: the client's base comes from its snapshot, which can lag the live state (an ADS press during the RPG's hip-fire raise).
+	if ( sv_matchClientBase->boolean && UsercmdBase_HasAckedSnapshot(delta, cl->netchan.outgoingSequence, cl->messageAcknowledge, PACKET_BACKUP) )
+		MSG_SetDefaultUserCmd(&cl->frames[ cl->messageAcknowledge & PACKET_MASK ].ps, oldcmd); // ANVIL: was always ps.
+	else
+		MSG_SetDefaultUserCmd(ps, oldcmd);
 
 
 	for ( i = 0 ; i < cmdCount ; i++ ) {

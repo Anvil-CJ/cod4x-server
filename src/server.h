@@ -575,6 +575,7 @@ struct trace_s;
 extern cvar_t* sv_rconPassword;
 extern cvar_t* sv_protocol;
 extern cvar_t* sv_padPackets;
+extern cvar_t* sv_matchClientBase; // ANVIL: added.
 extern cvar_t* sv_demoCompletedCmd;
 extern cvar_t* sv_screenshotArrivedCmd;
 extern cvar_t* sv_mapDownloadCompletedCmd;

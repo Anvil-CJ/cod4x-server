@@ -33,6 +33,7 @@
 #include "net_game_conf.h"
 #include "huffman.h"
 #include "server.h"
+#include "usercmd_base.h" // ANVIL: for MSG_SetDefaultUserCmd.
 
 #ifndef	MAX_MSGLEN
 #define	MAX_MSGLEN	0x20000		// max length of a message, which may
@@ -2514,7 +2515,10 @@ void MSG_SetDefaultUserCmd(playerState_t *ps, usercmd_t *ucmd)
 
 	for(i = 0; i < 2; i++)
 	{
-		ucmd->angles[i] = ANGLE2SHORT(ps->viewangles[i] - ps->delta_angles[i]);
+		if ( sv_matchClientBase->boolean ) // ANVIL: added, to compare in game.
+			ucmd->angles[i] = UsercmdBase_Angle((int16_t)ANGLE2SHORT(ps->viewangles[i]), (int16_t)ANGLE2SHORT(ps->delta_angles[i])); // ANVIL: was ANGLE2SHORT(ps->viewangles[i] - ps->delta_angles[i]), which differs from the client's base.
+		else
+			ucmd->angles[i] = ANGLE2SHORT(ps->viewangles[i] - ps->delta_angles[i]); // ANVIL: upstream's, for sv_matchClientBase 0.
 	}
   
 	if ( !(ps->otherFlags & 4) )

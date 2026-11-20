@@ -79,6 +79,7 @@ cvar_t	*sv_voiceQuality;
 cvar_t	*sv_cheats;
 cvar_t	*sv_rconPassword;		// password for remote server commands
 cvar_t	*sv_reconnectlimit;		// minimum seconds between connect messages
+cvar_t	*sv_matchClientBase; // ANVIL: added.
 cvar_t	*sv_padPackets;			// add nop bytes to messages
 cvar_t	*sv_mapRotation;
 cvar_t	*sv_mapRotationCurrent;
@@ -3067,6 +3068,7 @@ void SV_InitCvarsOnce(void){
 
     sv_cheats = Cvar_RegisterBool("sv_cheats", qfalse, 0x18, "Enable cheats on the server");
     sv_reconnectlimit = Cvar_RegisterInt("sv_reconnectlimit", 5, 0, 1800, 1, "Seconds to disallow a prior connected client to reconnect to the server");
+    sv_matchClientBase = Cvar_RegisterBool("sv_matchClientBase", qtrue, 0, "Decode usercmds against the base the client encoded them with"); // ANVIL: added.
     sv_padPackets = Cvar_RegisterInt("sv_padPackets", 0, 0, 0x7fffffff, 0, "How many nop-bytes to add to insert into each snapshot");
 
     sv_mapRotation = Cvar_RegisterString("sv_mapRotation", "", 0, "List of all maps server will play");
