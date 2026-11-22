@@ -36,6 +36,14 @@ Once per feature, after the user has confirmed in game that it works (not after 
 - Without the subagent, give a general-purpose subagent on Sonnet `.claude/agents/reviewer.md`.
 - Confirm each finding, fix it and verify again. After critical or major findings, send the fixes back to the same reviewer.
 
+## Token use
+
+Every tool call re-reads the whole conversation, so whatever enters it early is paid again on every later call.
+- Grep a file over about 300 lines, then read only the range you need. Grep docs, never read them whole, and never read a file twice.
+- Filter command output to what decides the next step (`tail`, `grep`).
+- Hand full test runs, wide surveys and comparisons with another commit to one Sonnet subagent, which reports pass or fail and the failure lines.
+- Keep prose short, and hand off and `/clear` between tasks, before the context gets heavy.
+
 ## Never
 
 - Claim something works without running it and seeing it work.
