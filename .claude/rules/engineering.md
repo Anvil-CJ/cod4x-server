@@ -14,7 +14,7 @@ Shared: identical copies live in anvil, anvil-plugin, client, anticheat and cod4
 1. **Understand** the code, its callers and the relevant docs. Don't guess.
 2. **Plan** anything bigger than a small fix, and get agreement before writing code. In a batch, the agreed list is that agreement. Trivial changes (a typo, a comment) skip this.
 3. **Implement** in small steps, following the language rules in `.claude/rules/`.
-4. **Verify:** build with warnings as errors, run the tests and run the program. New behavior gets tests; every bug fix gets a regression test.
+4. **Verify:** build with warnings as errors and run the program, then hand it to the user to test. Once they confirm it works, run the tests for the code that changed (what the changed files touch), not every suite unless they ask. New behavior gets tests; every bug fix gets a regression test.
 5. **Attack it:** list the ways it could fail (bad input, edge cases, error paths, concurrency, hot-path cost, security) and check each one yourself.
 6. **Report** in plain language: what changed, the commands you ran and their results, what the attack and any review found, and the remaining risks.
 
@@ -41,7 +41,8 @@ Once per feature, after the user has confirmed in game that it works (not after 
 Every tool call re-reads the whole conversation, so whatever enters it early is paid again on every later call.
 - Grep a file over about 300 lines, then read only the range you need. Grep docs, never read them whole, and never read a file twice.
 - Filter command output to what decides the next step (`tail`, `grep`).
-- Hand full test runs, wide surveys and comparisons with another commit to one Sonnet subagent, which reports pass or fail and the failure lines.
+- Run tests yourself, never through a subagent, so the user sees each run: one call per suite, the whole output to a file, and only the counts and failure lines printed.
+- Hand wide surveys and comparisons with another commit to one Sonnet subagent, which reports only what decides the next step.
 - Keep prose short, and hand off and `/clear` between tasks, before the context gets heavy.
 
 ## Never
