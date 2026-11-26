@@ -371,4 +371,5 @@
 
     __cdecl const char* Plugin_GetCommonVersionString(); //return cod4x version
     __cdecl level_locals_t* Plugin_GetLevelBase( );
+    __cdecl const char* Plugin_GetMapFastfilePath( ); // ANVIL: the OS path of the fastfile the engine opened for the running map (usermaps, or zone/<language>/ for a stock map, from fs_homepath or fs_basepath), "" before one opened. Call it from the main thread, after the map loaded.
     __cdecl void Plugin_UpdatePlayername(unsigned int clientnumber, const char* newname);

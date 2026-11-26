@@ -1506,6 +1506,14 @@ int DB_GetZoneAllocType(int zoneFlags)
 }
 
 
+static char db_mapFastfilePath[256]; // ANVIL: the OS path of the running map's fastfile, for Plugin_GetMapFastfilePath.
+
+const char* DB_GetMapFastfilePath() // ANVIL: added, see xassets.h.
+{
+    return db_mapFastfilePath;
+}
+
+
 bool __cdecl DB_TryLoadXFileInternal(const char *zoneName, signed int zoneFlags, char* g_fileBuf)
 {
     HANDLE zoneFile;
@@ -1523,6 +1531,10 @@ bool __cdecl DB_TryLoadXFileInternal(const char *zoneName, signed int zoneFlags,
     if(ff_dir >= 0)
     {
       zoneFile = _CreateFileA(filename, 0x80000000, 1, 0, 3, 0x60000000, 0);
+    }
+    if ( zoneFlags & 8 ) // ANVIL: the map's zone (SV_SpawnServer loads it with allocFlags 8); "" when it didn't open.
+    {
+      Q_strncpyz(db_mapFastfilePath, zoneFile != (HANDLE)-1 ? filename : "", sizeof(db_mapFastfilePath));
     }
     if (ff_dir >= 0 && zoneFile == (HANDLE)-1 )
     {

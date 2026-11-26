@@ -143,6 +143,7 @@ void DB_FreeUnusedResources();
 void DB_LoadXAssets_Hook(XZoneInfo*, unsigned int assetscount);
 void DB_BuildOverallocatedXAssetList(char* configstring, int len);
 void DB_SyncXAssets();
+const char* DB_GetMapFastfilePath(); // ANVIL: the OS path the running map's fastfile was opened from, "" before one opened. Read it on the main thread after the map loaded: the database thread writes it.
 void DB_PostLoadXZone();
 void DB_UpdateDebugZone();
 void DB_AddUserMapDir(const char *dir);

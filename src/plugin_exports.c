@@ -27,6 +27,7 @@
 #include "httpftp.h"
 #include "sapi.h"
 #include "g_shared.h"
+#include "xassets.h" // ANVIL: for Plugin_GetMapFastfilePath.
 /*=========================================*
  *                                         *
  *        Plugin Handler's exports         *
@@ -1107,4 +1108,9 @@ P_P_F void Plugin_DPrintf( const char *fmt, ...) {
 P_P_F level_locals_t* Plugin_GetLevelBase( )
 {
     return &level;
+}
+
+P_P_F const char* Plugin_GetMapFastfilePath( ) // ANVIL: added.
+{
+    return DB_GetMapFastfilePath();
 }
