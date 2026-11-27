@@ -1682,7 +1682,7 @@ the wrong gamestate.
 void SV_SendClientGameState( client_t *client ) {
 	msg_t msg;
 	byte msgBuffer[MAX_MSGLEN];
-	qboolean sapi, stats, returnNow;
+	qboolean sapi, returnNow;
 	char banrejectmsg[1024];
 	uint64_t playerid;
 	uint64_t steamid;
@@ -1730,9 +1730,10 @@ void SV_SendClientGameState( client_t *client ) {
 	}
 
 	sapi = SV_ConnectSApi(client);
-	stats = SV_RequestStats(client);
+	// ANVIL: send the gamestate without waiting for the stats upload (about 1.5 s): only GSC getStat and setStat read the stats, and Anvil calls neither.
+	SV_RequestStats(client);
 
-	if(!sapi || !stats)
+	if(!sapi)
 	{
 		return;
 	}

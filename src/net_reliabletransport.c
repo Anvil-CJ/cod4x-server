@@ -319,7 +319,41 @@ void ReliableMessagesTransmitNextFragment(netreliablemsg_t *chan)
 	{
 		chan->txwindow.frame = chan->txwindow.acknowledge;
 	}
-	
+
+}
+
+// ANVIL: sends up to count fragments that never went out and fit in the window, on top of the windowsize-a-second pace; returns how many it sent.
+int ReliableMessagesTransmitUnsentFragments(netreliablemsg_t *chan, int count)
+{
+	int next, end, sent;
+
+	if(chan == NULL)
+	{
+		return 0;
+	}
+	end = chan->txwindow.acknowledge + chan->txwindow.windowsize;
+	if(end > chan->txwindow.sequence)
+	{
+		end = chan->txwindow.sequence;
+	}
+	next = chan->txwindow.acknowledge;
+	for(sent = 0; sent < count; ++sent, ++next)
+	{
+		// A selective ack can mark a fragment that never went out, and the stock send skips it.
+		while(next < end && (chan->txwindow.fragments[next % chan->txwindow.bufferlen].senttime != 0
+			|| chan->txwindow.fragments[next % chan->txwindow.bufferlen].ack == next))
+		{
+			++next;
+		}
+		if(next >= end)
+		{
+			break;
+		}
+		// The stock pace goes on from here and reaches the fragments still in flight again when it wraps to the acknowledge.
+		chan->txwindow.frame = next;
+		ReliableMessagesTransmitNextFragment(chan);
+	}
+	return sent;
 }
 
 //Assuming you have already read the port

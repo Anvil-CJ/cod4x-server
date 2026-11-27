@@ -54,6 +54,7 @@ typedef struct
 }netreliablemsg_t;
 
 void ReliableMessagesFrame(netreliablemsg_t *chan, int msec);
+int ReliableMessagesTransmitUnsentFragments(netreliablemsg_t *chan, int count); // ANVIL:
 void ReliableMessagesReceiveNextFragment(netreliablemsg_t *chan, msg_t* buf);
 int ReliableMessageReceive(netreliablemsg_t *chan, byte* outdata, int len);
 int ReliableMessageReceiveSingleFragment(netreliablemsg_t *chan, byte* outdata, int len);

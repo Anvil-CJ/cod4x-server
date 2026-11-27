@@ -1077,8 +1077,13 @@ static void SV_BuildClientSnapshot( client_t *client ) {
  =======================
  */
 
+// ANVIL: the gamestate goes through the reliable transport at 20 fragments a second (about 24 KB/s) unless these let a frame send more.
+#define GAMESTATE_FRAGMENTS_PER_CLIENT_FRAME 4
+#define GAMESTATE_FRAGMENTS_PER_FRAME 48
+
 void SV_SendClientMessages( void ) {
 	int i, freeBytes, index;
+	int gamestateFragments = GAMESTATE_FRAGMENTS_PER_FRAME; // ANVIL:
 	msg_t msg;
 	byte buf[0x20000];
 	client_t *c;
@@ -1100,6 +1105,10 @@ void SV_SendClientMessages( void ) {
 		}
 
 		ReliableMessagesFrame(c->reliablemsg.netstate, svs.time);
+		// ANVIL: the frame's total cap keeps a map change with many players from flooding the uplink.
+		if ( c->state == CS_PRIMED && gamestateFragments > 0 ) {
+			gamestateFragments -= ReliableMessagesTransmitUnsentFragments( c->reliablemsg.netstate, gamestateFragments < GAMESTATE_FRAGMENTS_PER_CLIENT_FRAME ? gamestateFragments : GAMESTATE_FRAGMENTS_PER_CLIENT_FRAME );
+		}
 
 		SV_ReceiveReliableMessages(c);
 		if ( svs.time < c->nextSnapshotTime ) {
