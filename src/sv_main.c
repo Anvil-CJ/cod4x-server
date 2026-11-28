@@ -4863,7 +4863,15 @@ void SV_SpawnServer(const char *mapname)
 
     // get a new checksum feed and restart the file system
     srand( Sys_MillisecondsRaw() );
-    sv.checksumFeed = ( ( (int) rand() << 16 ) ^ rand() ) ^ Sys_Milliseconds();
+    // ANVIL: one feed per process, so players' games skip their file rescan on a map change (plugin-api.md section 40)
+    static int processChecksumFeed;
+    static qboolean hasProcessChecksumFeed;
+    if ( !hasProcessChecksumFeed )
+    {
+        processChecksumFeed = ( ( (int) rand() << 16 ) ^ rand() ) ^ Sys_Milliseconds();
+        hasProcessChecksumFeed = qtrue;
+    }
+    sv.checksumFeed = processChecksumFeed;
 
     // DO_LIGHT_DEDICATED
     // only comment out when you need a new pure checksum string and it's associated random feed
